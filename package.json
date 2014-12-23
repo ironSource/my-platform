@@ -1,0 +1,26 @@
+{
+  "name": "myappscloud-platform",
+  "version": "0.0.1",
+  "private": true,
+  "description": "provides platform specific functionality to myappscloud",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node lib/npmPostInstall.js"
+  },
+  "dependencies": {
+    "isos": "0.0.3",
+    "nssocket": "^0.5.3"
+  },
+  "author": {
+    "name": "Yaniv Kessler"
+  },
+  "license": "Proprietary",
+  "devDependencies": {
+    "should": "^4.4.1"
+  },
+  "readme": "# myappscloud-platform\nprovides platform specific functionality to myappscloud",
+  "readmeFilename": "README.md",
+  "_id": "myappscloud-platform@0.0.1",
+  "_shasum": "c75f556cf71aa02586d3cf5e9ea35ea6fbe1ab7e",
+  "_from": "..\\platform"
+}
