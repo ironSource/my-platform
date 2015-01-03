@@ -56,7 +56,7 @@ service.install()
 for service configuration options and full api, see [node-windows#Service](https://github.com/coreybutler/node-windows#windows-services) and [node-mac#Overview](https://github.com/coreybutler/node-mac#overview)
 
 ### launch(app) and launchElevated(app)
-launches a child process, this process is detached from the parent and thus will not prevent the parent from existing when the event loop as no more calls in it. On windows the elevated process is lauched using a special executable (see [here](https://github.com/coreybutler/node-windows#elevate))and on osx it is launched the same way as one would do "sudo ..."
+launches a child process, this process is detached from the parent and thus will not prevent the parent from existing when the event loop as no more calls in it. On windows the elevated process is lauched using a special executable (see [here](https://github.com/coreybutler/node-windows#elevate)) and on osx it is launched the same way as one would do "sudo ..."
 
 ```javascript
 var platform = require('myappscloud-platform')
