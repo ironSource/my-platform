@@ -67,3 +67,6 @@ child.stdout.on('data', function (data) {
 })
 
 ```
+
+### emergency
+in case of emergency, do ```npm install --force```
