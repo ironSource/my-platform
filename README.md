@@ -7,6 +7,32 @@ This module builds on top of [node-windows](https://github.com/coreybutler/node-
 ## API
 This module exposes a unified api implemented differently for each OS
 
+### Service(config)
+export an os specific Service class that exposes methods to install, uninstall, start and stop an operating system service
+
+```javascript
+var platform = require('my-platform')
+
+var service = new platform.Service({ ... config ... })
+
+service.install()
+```
+
+for service configuration options and full api, see [node-windows#Service](https://github.com/coreybutler/node-windows#windows-services) and [node-mac#Overview](https://github.com/coreybutler/node-mac#overview)
+
+### launch(app) and launchElevated(app)
+launches a child process, this process is detached from the parent and thus will not prevent the parent from existing when the event loop as no more calls in it. On windows the elevated process is lauched using a special executable (see [here](https://github.com/coreybutler/node-windows#elevate)) and on osx it is launched the same way as one would do "sudo ..."
+
+```javascript
+var platform = require('my-platform')
+
+var child = platform.launch({ command: 'ls', args: ['-la']})
+child.stdout.on('data', function (data) {
+    console.log(data.toString())
+})
+
+```
+
 ### createServer(connectionListener, startedListener)
 Creates a server that will receive connections from a client created using connect() (See below)
 On OSX this will be a normal TCP server, on Windows it will use a named pipe.
@@ -40,32 +66,6 @@ platform.connect(function (err, client) {
 		console.log('exit event from server fired')
 	})
 })
-```
-
-### Service(config)
-export an os specific Service class that exposes methods to install, uninstall, start and stop an operating system service
-
-```javascript
-var platform = require('my-platform')
-
-var service = new platform.Service({ ... config ... })
-
-service.install()
-```
-
-for service configuration options and full api, see [node-windows#Service](https://github.com/coreybutler/node-windows#windows-services) and [node-mac#Overview](https://github.com/coreybutler/node-mac#overview)
-
-### launch(app) and launchElevated(app)
-launches a child process, this process is detached from the parent and thus will not prevent the parent from existing when the event loop as no more calls in it. On windows the elevated process is lauched using a special executable (see [here](https://github.com/coreybutler/node-windows#elevate)) and on osx it is launched the same way as one would do "sudo ..."
-
-```javascript
-var platform = require('my-platform')
-
-var child = platform.launch({ command: 'ls', args: ['-la']})
-child.stdout.on('data', function (data) {
-	console.log(data.toString())
-})
-
 ```
 
 ### emergency
