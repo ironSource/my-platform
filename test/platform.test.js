@@ -1,9 +1,10 @@
 var should = require('should')
-var platform = require('../index.js')
+var Platform = require('../index.js')
 var dns = require('dns')
 var path = require('path')
 
 describe('platform', function () {
+	var platform
 
 	it('creates a server', function (done) {
 	
@@ -78,6 +79,13 @@ describe('platform', function () {
 
 		child.on('exit', function () {
 			done()
+		})
+	})
+
+	beforeEach(function () {
+		platform = new Platform({
+			osx: { port: 9000 },
+			windows: { port: '\\\\.\\pipe\\test-service' }
 		})
 	})
 })

@@ -8,8 +8,7 @@
   },
   "dependencies": {
     "isos": "0.0.3",
-    "nssocket": "^0.5.3",
-    "rc": "^0.5.5"
+    "nssocket": "^0.5.3"
   },
   "author": {
     "name": "Yaniv Kessler"
