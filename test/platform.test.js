@@ -85,8 +85,8 @@ describe('platform', function () {
 	beforeEach(function () {
 		platform = new Platform()
 		port = {
-			osx: { port: 9000 },
-			windows: { port: '\\\\.\\pipe\\test-service' }
+			osx: 9000,
+			windows: '\\\\.\\pipe\\test-service'
 		}
 	})
 })
