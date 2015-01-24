@@ -4,11 +4,11 @@ var dns = require('dns')
 var path = require('path')
 
 describe('platform', function () {
-	var platform
+	var platform, port
 
 	it('creates a server', function (done) {
 	
-		platform.createServer(onConnection, onStarted)
+		platform.createServer(port, onConnection, onStarted)
 
 		function onConnection(connection) {}
 
@@ -22,10 +22,10 @@ describe('platform', function () {
 	})
 
 	it('connects to the server', function (done) {
-		platform.createServer(function () {}, function (err, server) {
+		platform.createServer(port, function () {}, function (err, server) {
 			if (err) return done(err)
 				
-			platform.connect(onConnect)	
+			platform.connect(port, onConnect)	
 		})
 
 		function onConnect(err, client) {
@@ -83,9 +83,10 @@ describe('platform', function () {
 	})
 
 	beforeEach(function () {
-		platform = new Platform({
+		platform = new Platform()
+		port = {
 			osx: { port: 9000 },
 			windows: { port: '\\\\.\\pipe\\test-service' }
-		})
+		}
 	})
 })

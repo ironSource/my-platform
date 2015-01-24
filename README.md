@@ -11,9 +11,10 @@ This module exposes a unified api implemented differently for each OS
 export an os specific Service class that exposes methods to install, uninstall, start and stop an operating system service
 
 ```javascript
-var platform = require('my-platform')
+var Platform = require('my-platform')
 
-var service = new platform.Service({ ... config ... })
+var platform = new Platform({ osx: { port: ... }, windows: { port: ... }})
+var service = platform.service({ ... service config ... })
 
 service.install()
 ```
@@ -24,7 +25,9 @@ for service configuration options and full api, see [node-windows#Service](https
 launches a child process, this process is detached from the parent and thus will not prevent the parent from existing when the event loop as no more calls in it. On windows the elevated process is lauched using a special executable (see [here](https://github.com/coreybutler/node-windows#elevate)) and on osx it is launched the same way as one would do "sudo ..."
 
 ```javascript
-var platform = require('my-platform')
+var Platform = require('my-platform')
+
+var platform = new Platform({ osx: { port: ... }, windows: { port: ... }})
 
 var child = platform.launch({ command: 'ls', args: ['-la']})
 child.stdout.on('data', function (data) {
@@ -35,10 +38,11 @@ child.stdout.on('data', function (data) {
 
 ### createServer(connectionListener, startedListener)
 Creates a server that will receive connections from a client created using connect() (See below)
-On OSX this will be a normal TCP server, on Windows it will use a named pipe.
 
 ```javascript
-var platform = require('my-platform')
+var Platform = require('my-platform')
+
+var platform = new Platform({ osx: { port: ... }, windows: { port: ... }})
 
 function onConnection(connection) {
     connection.send(['event', 'app', '1234', 'exit'], { id: '1234' })
@@ -55,7 +59,9 @@ platform.createServer(onConnection, onStarted) // does not return a server objec
 connect to a server created by createServer()
 
 ```javascript
-var platform = require('my-platform')
+var Platform = require('my-platform')
+
+var platform = new Platform({ osx: { port: ... }, windows: { port: ... }})
 
 platform.connect(function (err, client) {
 	if (err) {
