@@ -82,6 +82,31 @@ describe('platform', function () {
 		})
 	})
 
+	it.only('launches a de elevated process', function (done) {
+		this.timeout(20000)
+
+		var child = platform.launchLow({ command: 'node', args: [ path.join(__dirname, 'lib', 'testprocess.js') ] })
+
+		child.stdout.on('data', function(d) {
+			d.toString().should.eql('ok\n')
+		})
+
+		child.stderr.on('data', function (d) {
+			// hack
+			d = d.toString()
+			console.log(d)
+			if (d !== 'Password:') {				
+				done(new Error('child process should not have failed'))
+			}
+		})
+
+		child.on('error', done)
+
+		child.on('exit', function () {
+			done()
+		})
+	})
+
 	beforeEach(function () {
 		platform = new Platform()
 		port = {
