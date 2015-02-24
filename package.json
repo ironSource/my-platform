@@ -1,6 +1,6 @@
 {
   "name": "my-platform",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "provides platform specific functionality",
   "main": "index.js",
   "scripts": {
