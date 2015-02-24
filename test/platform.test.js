@@ -2,6 +2,7 @@ var should = require('should')
 var Platform = require('../index.js')
 var dns = require('dns')
 var path = require('path')
+var isos = require('isos')
 
 describe('platform', function () {
 	var platform, port
@@ -57,7 +58,13 @@ describe('platform', function () {
 		})
 	})
 
-	it('launches an elevated process', function (done) {
+	var needToImplement = it.skip
+
+	if (isos('windows')) {
+		needToImplement = it
+	}
+
+	needToImplement('launches an elevated process', function (done) {
 		this.timeout(20000)
 
 		var child = platform.launchElevated({ command: 'node', args: [ path.join(__dirname, 'lib', 'testprocess.js') ] })
@@ -82,27 +89,47 @@ describe('platform', function () {
 		})
 	})
 
-	it.only('launches a de elevated process', function (done) {
+	needToImplement('launches a de elevated process', function (done) {
 		this.timeout(20000)
-
-		var child = platform.launchLow({ command: 'node', args: [ path.join(__dirname, 'lib', 'testprocess.js') ] })
+		var app = { command: 'node', args: [ path.join(__dirname, 'lib', 'testprocess2.js') ] }
+		var child = platform.launchLow(app)
+		
+		var ok = false
 
 		child.stdout.on('data', function(d) {
+			ok = true
 			d.toString().should.eql('ok\n')
 		})
 
-		child.stderr.on('data', function (d) {
-			// hack
-			d = d.toString()
-			console.log(d)
-			if (d !== 'Password:') {				
-				done(new Error('child process should not have failed'))
-			}
+		child.stderr.once('data', function (d) {
+			done(new Error('child process should not have failed ' + d))
 		})
 
 		child.on('error', done)
 
 		child.on('exit', function () {
+			console.log('exit!!!!!!!!!!!!!!!!!!!!!!!')
+			//ok.should.be.ok
+			done()
+		})
+	})
+
+	it('lists running processes', function (done) {
+		platform.listProcesses(function(err, processes) {
+			if (err) return done(err)
+
+			var findCommand
+			if (isos('windows')) {
+				findCommand = 'C:\\Windows\\Explorer.EXE'
+			} else if isos('osx') {
+				findCommand = '/usr/sbin/syslogd'
+			} else {
+				throw new Error('os not supported')
+			}
+
+			var index = findProcessByCommand(processes, findCommand)
+			index.should.be.greaterThan(-1)
+
 			done()
 		})
 	})
@@ -115,3 +142,12 @@ describe('platform', function () {
 		}
 	})
 })
+
+function findProcessByCommand(processList, command) {
+	command = command.toLowerCase()
+	for (var i = 0; i < processList.length; i++) {
+		if (processList[i].command.toLowerCase() === command) return i
+	}
+
+	return -1
+}
