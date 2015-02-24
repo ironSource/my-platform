@@ -121,7 +121,7 @@ describe('platform', function () {
 			var findCommand
 			if (isos('windows')) {
 				findCommand = 'C:\\Windows\\Explorer.EXE'
-			} else if isos('osx') {
+			} else if (isos('osx')) {
 				findCommand = '/usr/sbin/syslogd'
 			} else {
 				throw new Error('os not supported')
