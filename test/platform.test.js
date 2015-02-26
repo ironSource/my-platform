@@ -63,7 +63,7 @@ describe('platform', function () {
 	if (isos('windows')) {
 		needToImplement = it
 	}
-
+	
 	needToImplement('launches an elevated process', function (done) {
 		this.timeout(20000)
 

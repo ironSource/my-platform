@@ -2,7 +2,10 @@
 Provides OS platform specific functionality.
 currently supports OSX and Windows
 
-This module builds on top of [node-windows](https://github.com/coreybutler/node-windows) and [node-mac](https://github.com/coreybutler/node-mac)
+This module builds on top of 
+- [node-windows](https://github.com/coreybutler/node-windows)
+- [node-mac](https://github.com/coreybutler/node-mac)
+- [RunAsSystem](https://github.com/michaelbadichi/RunAsSystem)
 
 ## API
 This module exposes a unified api implemented differently for each OS
