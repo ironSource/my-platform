@@ -1,6 +1,6 @@
 {
   "name": "my-platform",
-  "version": "6.1.2",
+  "version": "7.0.0",
   "description": "provides platform specific functionality",
   "main": "index.js",
   "scripts": {
