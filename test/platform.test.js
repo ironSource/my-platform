@@ -37,25 +37,29 @@ describe('platform', function () {
 		}		
 	})
 
-	it('launches a process', function (done) {
+	it.only('launches a process', function (done) {
 		this.timeout(2000)
 
-		var child = platform.launch({ command: 'node', args: [ path.join(__dirname, 'lib', 'testprocess.js') ] })
-
-		child.stdout.on('data', function(d) {
-			d.toString().should.eql('ok\n')
+		var child = platform.launch({ command: 'node', args: [ path.join(__dirname, 'lib', 'testprocess2.js') ] })
+		
+		var data = []
+		var subProcessData = []
+		child.stdout.on('data', function (d) {
+			data.push(d.toString())
 		})
 
-		child.stderr.on('data', function (d) {
-			console.log(d.toString())
-			done(new Error('child process should not have failed'))
+		child.on('sub process data', function (d) {
+			subProcessData.push(d.toString())
+		})
+
+		child.on('exit', function () {
+			data.should.containEql('ok1\n')
+			data.should.containEql('ok2\n')
+			//subProcessData.should.containEql('{"exitCode":0x0}')
+			done()
 		})
 
 		child.on('error', done)
-
-		child.on('exit', function () {
-			done()
-		})
 	})
 
 	var needToImplement = it.skip

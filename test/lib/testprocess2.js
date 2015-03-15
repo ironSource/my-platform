@@ -1,4 +1,4 @@
+console.log('ok1')
 setTimeout(function () {
-	console.log('ok')
-	process.exit(123)
-}, 50000)
+	console.log('ok2')
+}, 1000)
