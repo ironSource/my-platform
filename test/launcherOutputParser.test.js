@@ -1,4 +1,4 @@
-var windowsLauncher = require('../lib/windowsLauncher.js')
+var launcherOutputParser = require('../lib/launcherOutputParser.js')
 var should = require('should')
 
 describe('windowsLauncher', function () {
@@ -8,7 +8,7 @@ describe('windowsLauncher', function () {
 		var after = 'xyzxyz'
 		var output =  before + separator + after
 
-		var parser = windowsLauncher.launcherOutputParser(separator)
+		var parser = launcherOutputParser(separator)
 
 		var pushedChunks = []
 		parser.push = function (chunk) {
