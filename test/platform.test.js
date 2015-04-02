@@ -40,7 +40,7 @@ describe('platform', function () {
 	it.only('launches a process', function (done) {
 		this.timeout(2000)
 
-		var child = platform.launch({ command: 'node', args: [ path.join(__dirname, 'lib', 'testprocess2.js') ] })
+		var child = platform.launch({ command: 'C:\\Program Files (x86)\\nodejs\\node.exe', args: [ path.join(__dirname, 'lib', 'test process2.js') ] })
 		
 		var data = []
 		var subProcessData = []
@@ -53,6 +53,7 @@ describe('platform', function () {
 		})
 
 		child.on('exit', function () {
+			console.log(data)
 			data.should.containEql('ok1\n')
 			data.should.containEql('ok2\n')
 			//subProcessData.should.containEql('{"exitCode":0x0}')
